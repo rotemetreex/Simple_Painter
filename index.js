@@ -1,5 +1,4 @@
 var isHidden = true;
-var rgbValue;
 
 
 function getColorValuesById(elementId) {
