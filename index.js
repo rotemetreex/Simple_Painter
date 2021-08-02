@@ -40,24 +40,13 @@ function changePickerDivDisplay() {
 function createColorFromRgbValue() {
 
     var newColor = document.getElementById('preview').style.backgroundColor;
-
     var ulElement = document.getElementById('ulColorPalete');
+
     var liElement = document.createElement('li');
     liElement.setAttribute('id', 'newChosenColor');
     liElement.setAttribute('class', 'colorCircle');
     liElement.setAttribute('style', 'background-color');
-    liElement.style.backgroundColor=newColor;
+    liElement.style.backgroundColor = newColor;
     ulElement.appendChild(liElement);
 
 }
-
-
-
-
-
-
-
-
-
-
-
