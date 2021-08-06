@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
     function startPosition(e){
         painting = true;
         draw(e);
-        e.prventDefault();
+        e.preventDefault();
     }
 
     function finishPosition(){
