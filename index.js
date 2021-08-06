@@ -19,8 +19,13 @@ window.addEventListener('load', () => {
 
     function startPosition(e){
         painting = true;
-        draw(e);
+        drawByMouse(e);
+    }
+
+    function startPositionforTouch(e){
         e.preventDefault();
+        painting = true;
+        drawByTouch(e);
     }
 
     function finishPosition(){
@@ -28,7 +33,7 @@ window.addEventListener('load', () => {
         ctx.beginPath();
     }
 
-    function draw(e) {
+    function drawByMouse(e) {
         if(!painting) return;
 
         ctx.lineWidth = 3;
@@ -39,17 +44,34 @@ window.addEventListener('load', () => {
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY);
+    }
 
+
+    function drawByTouch(e) {
+        if(!painting) return;
+
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = chosenColorfromPalete;
+        ctx.lineCap = 'round';
+
+        var touch = e.touches[0];
+        var x = touch.clientX - canvas.offsetLeft;
+        var y = touch.clientY;
+
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
     }
 
     canvas.addEventListener('mousedown', startPosition);
-    canvas.addEventListener('touchstart', startPosition);
+    canvas.addEventListener('touchstart', startPositionforTouch);
 
     canvas.addEventListener('mouseup', finishPosition);
     canvas.addEventListener('touchend', finishPosition);
 
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('mousemove', drawByMouse);
+    canvas.addEventListener('touchmove', drawByTouch);
 
 
     document.querySelector('#ulColorPalete').addEventListener('click', (event) => {
