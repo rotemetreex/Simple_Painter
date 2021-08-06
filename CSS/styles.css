@@ -12,11 +12,11 @@ body {
 
 canvas {
 	border: 2px solid grey;
-	width: 600px;
-	height: 400px;
-	background-color: white;
+	/* background-color: white; */
 	border-radius: 10px;
 	margin-top: 1%;
+	/* width: 600px;
+	height: 400px; */
 }
 
 /* colors */
@@ -27,22 +27,37 @@ ul {
 	margin: 0;
 }
 
+.clearBtn, .undoBtn {
+	display: inline-block;
+	margin: 0 3% 2% 3%;
+	text-align: center;
+	width: auto;
+	height: auto;
+	font-size: 18px;
+	padding: 10px 20px;
+	border-radius: 9px;
+	background-color: #242424;
+	border: 1px solid #3b77c7;
+	font-weight: 650;
+	color: #3b77c7;
+}
+
 #redColor {
-	background-color: red;
+	background-color: rgb(255, 0, 0);
 }
 
 #blueColor {
-	background-color: blue;
+	background-color: rgb(0, 0, 255);
 }
 
 #yellowColor {
-	background-color: yellow;
+	background-color: rgb(255, 255, 0);
 }
 
 .colorCircle {
 	border: 5px solid grey;
-	width: 100px;
-	height: 100px;
+	width: 50px;
+	height: 50px;
 	margin: 10px;
 	border-radius: 50%;
 	display: inline-block;
@@ -69,6 +84,18 @@ ul {
 	cursor: pointer;
 }
 
+.clearBtn:hover {
+	background-color: #3b77c7;
+	color: white;
+	cursor: pointer;
+}
+
+.undoBtn:hover {
+	background-color: #3b77c7;
+	color: white;
+	cursor: pointer;
+}
+
 /* COLOR PICKER TABLE */
 
 #pickerDiv {
@@ -80,10 +107,11 @@ ul {
 }
 
 #preview {
-	width: 70px;
+	width: 100px;
 	height: 100px;
 	border: 1px solid black;
 	background-color: #cfcbcb;
+	border-radius: 50%;
 }
 
 #saveColorButton {

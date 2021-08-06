@@ -10,15 +10,20 @@
 <body>
 	<div id="wrapper">
 		<!-- all the tags will be in the #wrapper div -->
-		<canvas>
+		<canvas id="canvas">
 			Your browser does not support HTML 5.
 		</canvas>
 		<ul id="ulColorPalete">
+
 			<li id="redColor" class="colorCircle"></li>
 			<li id="blueColor" class="colorCircle"></li>
 			<li id="yellowColor" class="colorCircle"></li>
+
+
 		</ul>
+		<button class="clearBtn" type="button">Clear</button>
 		<button id="openPickerButton" onclick="changePickerDivDisplay()">&#129412; Open Color Picker &#129412;</button>
+		<button class="undoBtn" type="button">Undo</button>
 		<br />
 		<div id="pickerDiv">
 			<table>
