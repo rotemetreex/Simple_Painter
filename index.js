@@ -20,6 +20,7 @@ window.addEventListener('load', () => {
     function startPosition(e){
         painting = true;
         draw(e);
+        e.prventDefault();
     }
 
     function finishPosition(){
@@ -43,8 +44,10 @@ window.addEventListener('load', () => {
 
     canvas.addEventListener('mousedown', startPosition);
     canvas.addEventListener('touchstart', startPosition);
+
     canvas.addEventListener('mouseup', finishPosition);
     canvas.addEventListener('touchend', finishPosition);
+
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('touchmove', draw);
 
