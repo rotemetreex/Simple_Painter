@@ -145,7 +145,7 @@ function createColorFromRgbValue() {
     if (newColor) {
         ulElement.appendChild(liElement);
     } else {
-        window.alert('\nto add a new color to palete, \nuse the ranges and preview, \nand save.');
+        window.alert('\nTo add a new color to palete, \nfirst, use the ranges and preview, \nand then save.');
     }
 };
 
