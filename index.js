@@ -1,6 +1,7 @@
 var isHidden = true;
 var brushChosenWidth = 3;
 var chosenColorfromPalete;
+var canvasBackgroundColor = 'rgb(255, 245, 232)';
 
 var canvas;
 var ctx;
@@ -15,7 +16,7 @@ window.addEventListener('load', () => {
     canvas.height = window.innerHeight /2;
     canvas.width = window.innerWidth -200;
 
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = canvasBackgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
@@ -151,7 +152,7 @@ function createColorFromRgbValue() {
 
 function clearCanvas() {
     ctx.clearRect(0,0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = canvasBackgroundColor;
     ctx.fillRect(0,0,canvas.width, canvas.height);
 
     restoreArray = [];
