@@ -13,17 +13,19 @@
 		<canvas id="canvas">
 			Your browser does not support HTML 5.
 		</canvas>
-		<ul id="ulColorPalete">
 
+		<ul id="ulColorPalete">
 			<li id="redColor" class="colorCircle"></li>
 			<li id="blueColor" class="colorCircle"></li>
 			<li id="yellowColor" class="colorCircle"></li>
-
-
 		</ul>
-		<button class="clearBtn" type="button">Clear</button>
-		<button id="openPickerButton" onclick="changePickerDivDisplay()">&#129412; Open Color Picker &#129412;</button>
-		<button class="undoBtn" type="button">Undo</button>
+		<div class="btnsWrapper" style="display: inline;">
+			<button class="clearBtn" type="button" onclick="clearCanvas()">Clear</button>
+			<button id="openPickerButton" onclick="changePickerDivDisplay()">&#129412; Open Color Picker
+				&#129412;</button>
+			<button class="undoBtn" type="button" onclick="undoLastStroke()">Undo</button>
+		</div>
+
 		<br />
 		<div id="pickerDiv">
 			<table>
@@ -43,6 +45,16 @@
 				<tr>
 					<td>B</td>
 					<td><input id="blueInput" type="range" min="0" max="255" oninput="getColorValuesAsRGB()" /></td>
+				</tr>
+				<tr>
+					<td class="brushSizeText" colspan="3">
+						Choose Brush Size:
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<input id="brushSize" class="brushSizeRange" type="range" min="1" max="100" oninput="chooseBrushWidth()">
+					</td>
 				</tr>
 				<tr>
 					<td colspan="3"><button id="saveColorButton" onclick="createColorFromRgbValue()">Save color</button>

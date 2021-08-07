@@ -1,18 +1,22 @@
 var isHidden = true;
+var brushChosenWidth = 3;
 var chosenColorfromPalete;
 
+var canvas;
+var ctx;
+
+var restoreArray = [];
+var i = -1;
+
 window.addEventListener('load', () => {
-    const canvas = document.querySelector('#canvas');
-    const ctx = canvas.getContext('2d');
+    canvas = document.querySelector('#canvas');
+    ctx = canvas.getContext('2d');
 
     canvas.height = window.innerHeight /2;
     canvas.width = window.innerWidth -200;
 
     ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    // canvas.height = 150;
-    // canvas.width = 300;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
     let painting = false;
@@ -20,39 +24,47 @@ window.addEventListener('load', () => {
     function startPosition(e){
         painting = true;
         drawByMouse(e);
-    }
+    };
 
-    function startPositionforTouch(e){
+    function startPositionForTouch(e){
         e.preventDefault();
         painting = true;
         drawByTouch(e);
-    }
+    };
 
-    function finishPosition(){
+    function finishPosition(e){
         painting = false;
+        ctx.closePath();
         ctx.beginPath();
-    }
+
+        if(e.type != 'mouseout'){
+            restoreArray.push(ctx.getImageData(0,0,canvas.width,canvas.height));
+            i += 1;
+        };
+    };
 
     function drawByMouse(e) {
         if(!painting) return;
 
-        ctx.lineWidth = 3;
+        ctx.lineWidth = brushChosenWidth;
         ctx.strokeStyle = chosenColorfromPalete;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
         ctx.lineTo(e.clientX - canvas.offsetLeft, e.clientY);
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(e.clientX - canvas.offsetLeft, e.clientY);
-    }
+    };
 
 
     function drawByTouch(e) {
         if(!painting) return;
 
-        ctx.lineWidth = 3;
+        ctx.lineWidth = brushChosenWidth;
         ctx.strokeStyle = chosenColorfromPalete;
         ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
         var touch = e.touches[0];
         var x = touch.clientX - canvas.offsetLeft;
@@ -62,13 +74,15 @@ window.addEventListener('load', () => {
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(x, y);
-    }
+    };
 
     canvas.addEventListener('mousedown', startPosition);
-    canvas.addEventListener('touchstart', startPositionforTouch);
+    canvas.addEventListener('touchstart', startPositionForTouch);
 
     canvas.addEventListener('mouseup', finishPosition);
+    canvas.addEventListener('mouseout', finishPosition);
     canvas.addEventListener('touchend', finishPosition);
+    canvas.addEventListener('touchcancle', finishPosition);
 
     canvas.addEventListener('mousemove', drawByMouse);
     canvas.addEventListener('touchmove', drawByTouch);
@@ -82,12 +96,16 @@ window.addEventListener('load', () => {
 
 });
 
+function chooseBrushWidth(){
+    brushChosenWidth = getColorValuesById('brushSize');
+    // console.log(brushChosenWidth);
+};
 
 
 function getColorValuesById(elementId) {
     var input = document.getElementById(elementId);
     return input.value;
-}
+};
 
 
 function getColorValuesAsRGB() {
@@ -102,7 +120,7 @@ function getColorValuesAsRGB() {
     // console.log(rgbColor);
 
     return rgbColor;
-}
+};
 
 
 function changePickerDivDisplay() {
@@ -118,7 +136,7 @@ function changePickerDivDisplay() {
     }
     isHidden = !isHidden;
 
-}
+};
 
 function createColorFromRgbValue() {
 
@@ -129,7 +147,24 @@ function createColorFromRgbValue() {
     liElement.style.backgroundColor = newColor;
     ulElement.appendChild(liElement);
 
-}
+};
 
+function clearCanvas() {
+    ctx.clearRect(0,0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,canvas.width, canvas.height);
 
+    restoreArray = [];
+    i = -1;
+};
+
+function undoLastStroke() {
+    if (i <= 0) {
+        clearCanvas();
+    } else {
+        restoreArray.pop();
+        ctx.putImageData(restoreArray[i-1], 0, 0);
+        i -= 1;
+    };
+};
 
