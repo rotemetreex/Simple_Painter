@@ -13,8 +13,8 @@ window.addEventListener('load', () => {
     canvas = document.querySelector('#canvas');
     ctx = canvas.getContext('2d');
 
-    canvas.height = window.innerHeight /2;
-    canvas.width = window.innerWidth -200;
+    canvas.height = window.innerHeight / 2;
+    canvas.width = window.innerWidth - 200;
 
     ctx.fillStyle = canvasBackgroundColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -22,30 +22,30 @@ window.addEventListener('load', () => {
 
     let painting = false;
 
-    function startPosition(e){
+    function startPosition(e) {
         painting = true;
         drawByMouse(e);
     };
 
-    function startPositionForTouch(e){
+    function startPositionForTouch(e) {
         e.preventDefault();
         painting = true;
         drawByTouch(e);
     };
 
-    function finishPosition(e){
+    function finishPosition(e) {
         painting = false;
         ctx.closePath();
         ctx.beginPath();
 
-        if(e.type != 'mouseout'){
-            restoreArray.push(ctx.getImageData(0,0,canvas.width,canvas.height));
+        if (e.type != 'mouseout') {
+            restoreArray.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
             i += 1;
         };
     };
 
     function drawByMouse(e) {
-        if(!painting) return;
+        if (!painting) return;
 
         ctx.lineWidth = brushChosenWidth;
         ctx.strokeStyle = chosenColorfromPalete;
@@ -60,7 +60,7 @@ window.addEventListener('load', () => {
 
 
     function drawByTouch(e) {
-        if(!painting) return;
+        if (!painting) return;
 
         ctx.lineWidth = brushChosenWidth;
         ctx.strokeStyle = chosenColorfromPalete;
@@ -69,7 +69,7 @@ window.addEventListener('load', () => {
 
         var touch = e.touches[0];
         var x = touch.clientX - canvas.offsetLeft;
-        var y = touch.clientY;
+        var y = touch.clientY - canvas.offsetTop;
 
         ctx.lineTo(x, y);
         ctx.stroke();
@@ -90,16 +90,14 @@ window.addEventListener('load', () => {
 
 
     document.querySelector('#ulColorPalete').addEventListener('click', (event) => {
-        // chosenColorfromPalete = event.target.style.backgroundColor;
         var computedStyle = getComputedStyle(event.target);
         chosenColorfromPalete = computedStyle.getPropertyValue('background-color');
     });
 
 });
 
-function chooseBrushWidth(){
+function chooseBrushWidth() {
     brushChosenWidth = getColorValuesById('brushSize');
-    // console.log(brushChosenWidth);
 };
 
 
@@ -117,8 +115,6 @@ function getColorValuesAsRGB() {
     var rgbColor = 'rgb(' + red + ', ' + green + ', ' + blue + ')';
 
     document.getElementById('preview').style.backgroundColor = rgbColor;
-
-    // console.log(rgbColor);
 
     return rgbColor;
 };
@@ -146,14 +142,17 @@ function createColorFromRgbValue() {
     var liElement = document.createElement('li');
     liElement.classList.add('colorCircle');
     liElement.style.backgroundColor = newColor;
-    ulElement.appendChild(liElement);
-
+    if (newColor) {
+        ulElement.appendChild(liElement);
+    } else {
+        window.alert('\nto add a new color to palete, \nuse the ranges and preview, \nand save.');
+    }
 };
 
 function clearCanvas() {
-    ctx.clearRect(0,0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = canvasBackgroundColor;
-    ctx.fillRect(0,0,canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     restoreArray = [];
     i = -1;
@@ -164,7 +163,7 @@ function undoLastStroke() {
         clearCanvas();
     } else {
         restoreArray.pop();
-        ctx.putImageData(restoreArray[i-1], 0, 0);
+        ctx.putImageData(restoreArray[i - 1], 0, 0);
         i -= 1;
     };
 };

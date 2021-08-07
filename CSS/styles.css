@@ -24,7 +24,7 @@ ul {
 	margin: 0 0 1% 0;
 }
 
-.clearBtn, .undoBtn {
+.clearBtn, .saveBtn, .undoBtn, .redoBtn {
 	padding: 13px 10px 10px 10px;
 	background-color: #242424;
 	border: 2px solid #3b77c7;
@@ -48,7 +48,7 @@ ul {
 }
 
 .colorCircle {
-	border: 5px solid grey;
+	border: 3px solid #525252;
 	width: 50px;
 	height: 50px;
 	margin: 10px;
